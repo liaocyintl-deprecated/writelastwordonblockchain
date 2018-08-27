@@ -24,6 +24,8 @@ Access the web interface in a browser.
 ↑Users remain their last words and the address, which they want to transfer to, and the asset number.
 Clicking the blue button, the data is saved onto the block chain (Ethereum).
 
+**Requiring MetaMask** 
+
 ![](imgs/7dbac290.png)
 
 ↑This simulates a biological sensor, which can monitor the heart beat and give an objective judgement of the death.
