@@ -6,6 +6,10 @@ We consider the block chain can be used for heritage because it can not be falsi
 The users can remain their last words when they are alive.
 When they die, the last words and electronic assets can automatically transfer to specified users in smart contracts.
 
+# Authors
+
+Daikichi Mukoyama, Wataru Nagai, Yuji Hayashi, Toshiyuki Aso, Kanta Kurazumi, Chenyi Liao
+
 # Usage
 Clone the source code:
 ```text
@@ -17,6 +21,9 @@ npm install
 node app.js
 ```
 Access the web interface in a browser.
+```test
+http://localhost:3000
+```
 
 # Flow
 ![](imgs/30081eed.png)
