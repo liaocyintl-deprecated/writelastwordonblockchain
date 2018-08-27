@@ -1,6 +1,6 @@
-# Introduce
+# Introduction
 
-This is a demo application for OPERA Hackson @ Hakone 2018.
+This is a demo application for OPERA Hackson @ Hakone, 15th - 16th Aug 2018.
 
 We consider the block chain can be used for heritage because it can not be falsified.
 The users can remain their last words when they are alive.
