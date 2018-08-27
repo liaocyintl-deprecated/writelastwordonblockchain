@@ -20,14 +20,17 @@ Access the web interface in a browser.
 
 # Flow
 ![](imgs/30081eed.png)
+
 ↑Users remain their last words and the address, which they want to transfer to, and the asset number.
 Clicking the blue button, the data is saved onto the block chain (Ethereum).
 
 ![](imgs/7dbac290.png)
+
 ↑This simulates a biological sensor, which can monitor the heart beat and give an objective judgement of the death.
 You can click the "die" button to simulate the people death.
 
 ![](imgs/f036419c.png)
+
 ↑Then the people death, the last words transfer to specified user like this.
 But the asset transfer is not implemented yet.
 
