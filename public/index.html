@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Death Sensor</title>
+
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+
+    <link rel="stylesheet" href="css/cover.css">
+
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/jquery.min.js"></script>
+
+    <script src="js/canvasjs.min.js"></script>
+
+    <script src="js/web3.min.js"></script>
+
+    <script>
+
+        var web3 = new Web3(web3.currentProvider);
+        var HeritageContract = web3.eth.contract([
+            {
+                "constant": false,
+                "inputs": [
+                    {
+                        "name": "x",
+                        "type": "string"
+                    },
+                    {
+                        "name": "y",
+                        "type": "address"
+                    },
+                    {
+                        "name": "z",
+                        "type": "uint256"
+                    }
+                ],
+                "name": "writeLastWords",
+                "outputs": [],
+                "payable": false,
+                "stateMutability": "nonpayable",
+                "type": "function"
+            },
+            {
+                "constant": true,
+                "inputs": [],
+                "name": "loadLastWords",
+                "outputs": [
+                    {
+                        "name": "x",
+                        "type": "string"
+                    }
+                ],
+                "payable": false,
+                "stateMutability": "view",
+                "type": "function"
+            }
+        ]);
+        var Heritage = HeritageContract.at('0xaa02734aeedfd54b32822a1c8e6e6b0c36e4eea1');
+
+
+        var die = function () {
+            window.isdie = true;
+        };
+
+        var uploadtoblockchain = function () {
+            var lastword = $("#txtlastword").val();
+
+            var to = $("#txttoaddress").val();
+            var money = $("#txtmoney").val();
+
+
+            var callback = Heritage.writeLastWords(lastword, to, money, (error, result) => (alert("ブロックチェーンにアップロードしました。もう直せなくなりました。")));
+
+            $("#formremaining input").prop('disabled', true);
+            $("#formremaining textarea").prop('disabled', true);
+            $("#formremaining button").prop('disabled', true);
+        };
+    </script>
+
+</head>
+<body data-gr-c-s-loaded="true">
+
+<div class="site-wrapper">
+
+    <div class="site-wrapper-inner">
+
+        <div class="cover-container">
+
+
+            <div class="">
+                <div class="inner">
+                    <h3 class="masthead-brand">Death Simulator</h3>
+                </div>
+            </div>
+
+            <div class="">
+
+                <h1 class="cover-heading" style="margin-top: 50px;">Remain Your Last Word.</h1>
+
+                <form id="formremaining">
+
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">遺書</label>
+                        <div class="col-sm-10">
+                            <textarea id="txtlastword" rows="5" class="form-control" placeholder=""></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">送金先</label>
+                        <div class="col-sm-10">
+                            <input id="txttoaddress" value="0x85e9aec69f96b2051363eec3dbd896229794a573" class="form-control" placeholder="" />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">金額</label>
+                        <div class="col-sm-10">
+                            <input id="txtmoney" type="number" class="form-control" placeholder="" />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-sm-12">
+                            <button type="button" onclick="uploadtoblockchain()" class="btn btn-primary">
+                                ブロックチェーンにアップロート
+                            </button>
+                        </div>
+                    </div>
+                </form>
+
+
+                <h1 class="cover-heading" style="margin-top: 50px;">No One Lives Forever.</h1>
+                <form>
+                    <div class="form-group row">
+                        <div class="col-sm-12">
+                            <button type="button" onclick="die()" class="btn btn-danger btn-block btn-lg">Die</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="row">
+                <div id="chartContainer" style="height: 370px; width:100%;"></div>
+            </div>
+
+            <div id="showlastword" class="row" style="margin-top:50px; margin-bottom:50px;">
+            </div>
+
+            <script>
+                window.onload = function () {
+
+                    var dps = []; // dataPoints
+                    var chart = new CanvasJS.Chart("chartContainer", {
+                        title: {
+                            text: "Heart Beat"
+                        },
+                        axisY: {
+                            includeZero: true,
+                            minimum: -10,
+                            maximum: 190
+                        },
+                        data: [{
+                            lineColor: "green",
+                            type: "line",
+                            dataPoints: dps
+                        }]
+                    });
+
+                    var xVal = 0;
+                    var yVal = 120;
+                    var yAvg = 120;
+                    var updateInterval = 500;
+                    var dataLength = 50; // number of dataPoints visible at any point
+
+                    var die_i = 0;
+
+                    window.isdie = false;
+
+                    var updateChart = function (count) {
+
+                        count = count || 1;
+
+                        if (window.isdie) {
+                            var data = [120, 140, 180, 185, 160, 110, 80, 60, 50, 40, 30, 20, 15, 10, 5, 0, 0, 0, 0, 0];
+
+                            if (die_i < data.length) {
+
+                                if (die_i % 2 == 0) {
+                                    chart.options.backgroundColor = "yellow";
+                                } else {
+                                    chart.options.backgroundColor = "#FFFFFF";
+                                }
+
+                                chart.options.data[0].lineColor = "orange";
+                                yVal = data[die_i] + Math.round(5 + Math.random() * (10));
+
+                                chart.options.title.text = "Heart Beat Sensor (" + yVal + " bpm)";
+
+                                dps.push({
+                                    x: xVal,
+                                    y: yVal
+                                });
+                                xVal++;
+
+                                die_i++;
+                            } else {
+
+                                chart.options.data[0].lineColor = "red";
+
+                                chart.options.backgroundColor = "#AAAAAA";
+
+                                yVal = 0;
+
+                                chart.options.title.text = "Heart Beat Sensor (" + yVal + " bpm)";
+
+                                dps.push({
+                                    x: xVal,
+                                    y: yVal
+                                });
+                                xVal++;
+
+
+
+                                Heritage.loadLastWords(function(error, lastword){
+                                    clearInterval(window.loop);
+                                    if(!error){
+                                        $("html, body").animate({scrollTop: $(document).height()}, "slow");
+                                        $("#showlastword").html("<h1 style='text-align: center;'>遺書：" + lastword + "</h1>");
+                                        console.log(lastword);
+                                    }
+                                    else{
+                                        console.error(error);
+                                    }
+
+                                });
+
+                            }
+
+                        } else {
+                            for (var j = 0; j < count; j++) {
+                                yVal = yAvg + Math.round(5 + Math.random() * (-10 - 10));
+
+                                chart.options.title.text = "Heart Beat Sensor (" + yVal + " bpm)";
+                                dps.push({
+                                    x: xVal,
+                                    y: yVal
+                                });
+                                xVal++;
+                            }
+                        }
+
+                        if (dps.length > dataLength) {
+                            dps.shift();
+                        }
+
+                        chart.render();
+                    };
+
+                    updateChart(dataLength);
+                    window.loop = setInterval(function () {
+                        updateChart()
+                    }, updateInterval);
+
+                }
+            </script>
+
+            <div class="">
+                <div class="inner">
+                    <p>&copy; Death Sensor Team. </p>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>
