@@ -1,10 +1,10 @@
 # Introduction
 
-This is a demo application for OPERA Hackson @ Hakone, 15th - 16th Aug 2018.
+This is a demo application for OPERA Hackson @ Hakone, Aug 15th - 16th 2018.
 
 We consider the block chain can be used for heritage because it can not be falsified.
 The users can remain their last words when they are alive.
-When they die, the last words and electronic assets can automatically transfer to specified users in smart contracts.
+When they dead, the last words and electronic assets can automatically transfer to specified users in smart contracts.
 
 # Authors
 
